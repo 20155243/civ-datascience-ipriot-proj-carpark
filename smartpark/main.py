@@ -3,7 +3,7 @@ If you have a Raspberry Pi, or a SenseHAT emulator under Debian, you do not need
 
 You need to split the classes here into two files, one for the CarParkDisplay and one for the CarDetector.
 Attend to the TODOs in each class to complete the implementation."""
-from interfaces import CarparkSensorListener
+
 import tkinter as tk
 #TODO: replace this module with yours
 from carpark import CarparkManager

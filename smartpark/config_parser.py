@@ -32,16 +32,11 @@ Finally, you can use `yaml` if you prefer.
 
 
 """
-
+import json
 
 
 def parse_config(config_file: str) -> dict:
     """Parse the config file and return the values as a dictionary"""
-    import json
-    with open(config_file) as input_file:
+    with open(config_file, "r") as input_file:
         config = json.load(input_file)
     return config["CarParks"][0]
-
-if __name__ == '__main__':
-    cfg_data=parse_config("samples_and_snippets\\config.json")
-    print(cfg_data)

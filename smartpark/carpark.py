@@ -3,6 +3,7 @@ from smartpark.interfaces import CarparkDataProvider
 from smartpark.config_parser import parse_config
 import time
 import os
+from pathlib import Path
 
 '''
     TODO: 
@@ -27,7 +28,10 @@ import os
 
 class CarparkManager(CarparkSensorListener, CarparkDataProvider):
     # constant, for where to get the configuration data
-    CONFIG_FILE = "config.json"
+
+    BASE_DIR = Path(__file__).resolve().parent.parent
+
+    CONFIG_FILE = BASE_DIR / "samples_and_snippets" / "config.json"
     LOG_FILE = "carpark_log.txt"
 
     def __init__(self):
@@ -84,10 +88,10 @@ class CarparkManager(CarparkSensorListener, CarparkDataProvider):
         self._current_time = value
 
     def incoming_car(self, license_plate):
-        # print('Car in! ' + license_plate)
+        print('Car in! ' + license_plate)
         if self.available_spaces > 0:
             car = Car(license_plate)
-            self.entry_time = time.localtime()
+            car.entry_time = time.localtime()
             self.cars[license_plate] = car
             self.available_spaces -= 1
             self.log_event(f"Car entered: {license_plate}, spaces left: {self.available_spaces}")
@@ -102,7 +106,7 @@ class CarparkManager(CarparkSensorListener, CarparkDataProvider):
         # print('Car out! ' + license_plate)
         car = self.cars.get(license_plate)
         if car:
-            self.exit_time = time.localtime()
+            car.exit_time = time.localtime()
             self.available_spaces += 1
             self.log_event(f"Car exited: {license_plate}, spaces left: {self.available_spaces}")
         else:

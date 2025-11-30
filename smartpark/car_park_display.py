@@ -101,7 +101,7 @@ class CarParkDisplay:
         while True:
             # TODO: This timer is pretty janky! Can you provide some kind of signal from your code
             # to update the display?
-            # time.sleep(1)
+            #time.sleep(1)
             self.update_event.wait()  # Waits for Update Signal
             self.update_event.clear()
             # When you get an update, refresh the display.
