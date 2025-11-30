@@ -1,46 +1,20 @@
 import unittest
 import json  # you can use toml, json,yaml, or ryo for your config file
 import sys,os
+
+import smartpark.config_parser as pc
 from pathlib import Path
 cwd = Path(os.path.dirname(__file__))
 parent = str(cwd.parent)
 
-sys.path.append(parent + "/smartpark")
+sys.path.append(parent + "/samples_and_snippets")
 
 
 class TestConfigParsing(unittest.TestCase):
     def test_parse_config_has_correct_location_and_spaces(self):
         # TODO: read from a configuration file...
-        config_string = '''
-{
-    "CarParks": [
-        {
-            "name": "raf-park-international",
-            "total-spaces": 130,
-            "total-cars": 0,
-            "location": "moondalup",
-            "broker": "localhost",
-            "port": 1883,
-            "Sensors": [
-                {
-                    "name": "sensor1",
-                    "type": "entry"
-                },
-                {
-                    "name": "sensor2",
-                    "type": "exit"
-                }
-            ],
-            "Displays": [
-                {
-                    "name": "display1"
-                }
-            ]
-        }
-    ]
-}
-        '''
-        config = json.loads(config_string)
+        config = "samples_and_snippets/config.json"
+        #config = json.loads(config_string)
         parking_lot = pc.parse_config(config)
         self.assertEqual(parking_lot['location'], "Moondalup City Square Parking")
         self.assertEqual(parking_lot['total_spaces'], 192)
